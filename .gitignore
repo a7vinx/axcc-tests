@@ -9,3 +9,6 @@
 
 # Auto-generated tag files
 tags
+
+# Build directory
+/build/
