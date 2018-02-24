@@ -39,7 +39,7 @@ add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src
 # Include axcc source file directory
 include_directories(axcc/src)
 
-# Now simply link against gtest or gtest_main as needed. Eg
-# add_executable(example example.cpp)
-# target_link_libraries(example gtest_main)
-# add_test(NAME example_test COMMAND example)
+# Build tests
+add_executable(token_test token_test.cc axcc/src/token.cc)
+target_link_libraries(token_test gtest_main)
+add_test(NAME run_token_test COMMAND token_test)
