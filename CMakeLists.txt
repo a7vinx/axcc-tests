@@ -43,3 +43,9 @@ include_directories(axcc/src)
 add_executable(token_test token_test.cc axcc/src/token.cc)
 target_link_libraries(token_test gtest_main)
 add_test(NAME run_token_test COMMAND token_test)
+
+add_executable(scanner_test scanner_test.cc axcc/src/token.cc
+               axcc/src/scanner.cc)
+target_link_libraries(scanner_test gtest_main)
+add_test(NAME run_scanner_test COMMAND scanner_test
+         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/testfiles)
