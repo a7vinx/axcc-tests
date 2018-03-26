@@ -26,10 +26,13 @@ protected:
     std::size_t CurLineLen() const { return scp_->cur_line_len_; }
     // Accessors of private functions of class Scanner
     char Begin() const { return scp_->Begin(); }
+    char CurChar() const { return scp_->CurChar(); }
     char Next() { return scp_->Next(); }
     char LookAhead() const { return scp_->LookAhead(); }
     char LookAheadN(int n) const { return scp_->LookAheadN(n); }
+    bool NextIs(char c) const { return scp_->NextIs(c); }
     bool Try(char c) { return scp_->Try(c); }
+    bool Try(const std::string& chars) { return scp_->Try(chars); }
     unsigned int FindNext(char c) { return scp_->FindNext(c); }
     void MakeTokenInTS(const TokenType& tag, const std::string& token_str) {
         return scp_->MakeTokenInTS(tag, token_str);
@@ -70,6 +73,13 @@ TEST_F(ScannerTest, Traverse) {
     EXPECT_EQ(CurLineLen(), 12);
     EXPECT_EQ(CurRow(), 1);
     EXPECT_EQ(CurColumn(), 2);
+
+    // CurChar()
+    EXPECT_EQ(CurChar(), 'n');
+
+    // NextIs()
+    EXPECT_TRUE(NextIs('t'));
+    EXPECT_FALSE(NextIs('f'));
 
     // Move to '{'
     for (int i = 2; i < 12; i++)
@@ -116,6 +126,20 @@ TEST_F(ScannerTest, Traverse) {
     EXPECT_EQ(CurLineLen(), 9);
     EXPECT_EQ(CurRow(), 2);
     EXPECT_EQ(CurColumn(), 2);
+
+    // bool Try(const std::string&);
+    EXPECT_TRUE(Try("tur"));
+    EXPECT_EQ(*CurCharPtr(), 'r');
+    EXPECT_EQ(*CurLinePtr(), 'r');
+    EXPECT_EQ(CurLineLen(), 9);
+    EXPECT_EQ(CurRow(), 2);
+    EXPECT_EQ(CurColumn(), 5);
+    EXPECT_FALSE(Try("n8"));
+    EXPECT_EQ(*CurCharPtr(), 'r');
+    EXPECT_EQ(*CurLinePtr(), 'r');
+    EXPECT_EQ(CurLineLen(), 9);
+    EXPECT_EQ(CurRow(), 2);
+    EXPECT_EQ(CurColumn(), 5);
 }
 
 TEST_F(ScannerTest, MakeTokenInTS) {
