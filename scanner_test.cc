@@ -170,7 +170,7 @@ TEST_F(ScannerTest, ScanPunctuator) {
     std::unique_ptr<TokenSequence> tsp = scp_->Scan();
     EXPECT_EQ(tsp->Begin()->Tag(), TokenType::LPAR);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::RPAR);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEW_LINE);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     // Do a comprehensive check
     Token* tp = tsp->Next();
     EXPECT_EQ(tp->Tag(), TokenType::LBRACE);
@@ -182,7 +182,7 @@ TEST_F(ScannerTest, ScanPunctuator) {
     EXPECT_EQ(tp->LocPtr()->line_len, 2);
     // Continue
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::RBRACE);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEW_LINE);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::LSBRACKET);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::RSBRACKET);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::QUES);
@@ -212,7 +212,7 @@ TEST_F(ScannerTest, ScanPunctuator) {
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::CARET);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::EQ);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::ASGN);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEW_LINE);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::INC);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::ADD_ASGN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::PLUS);
@@ -236,7 +236,7 @@ TEST_F(ScannerTest, ScanPunctuator) {
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::SLASH);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::INVALID);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::INVALID);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEW_LINE);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next(), nullptr);
 }
 
@@ -244,18 +244,18 @@ TEST_F(ScannerTest, SkipComment) {
     InitScanner("testfile3.c");
     std::unique_ptr<TokenSequence> tsp = scp_->Scan();
     EXPECT_EQ(tsp->Begin()->Tag(), TokenType::SEMI);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEW_LINE);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::SEMI);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEW_LINE);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEW_LINE);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEW_LINE);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::SEMI);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEW_LINE);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::PLUS);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::PLUS);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEW_LINE);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::SLASH);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEW_LINE);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::SEMI);
     EXPECT_EQ(tsp->Next(), nullptr);
 }
