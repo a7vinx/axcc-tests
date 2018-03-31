@@ -260,4 +260,99 @@ TEST_F(ScannerTest, SkipComment) {
     EXPECT_EQ(tsp->Next(), nullptr);
 }
 
+void ExpectTokenAndNewLine(TokenSequence& ts, TokenType type,
+                           const std::string& token_str) {
+    Token* tp = ts.Next();
+    EXPECT_EQ(tp->Tag(), type);
+    EXPECT_EQ(tp->TokenStr(), token_str);
+    EXPECT_EQ(ts.Next()->Tag(), TokenType::NEWLINE);
+}
+
+TEST_F(ScannerTest, ScanNumConstant) {
+    InitScanner("testfile4.c");
+    std::unique_ptr<TokenSequence> tsp = scp_->Scan();
+    auto expect_i_constant_and_newline =
+        [&ts = *tsp](const std::string& token_str) {
+            ExpectTokenAndNewLine(ts, TokenType::I_CONSTANT, token_str);
+    };
+    auto expect_f_constant_and_newline =
+        [&ts = *tsp](const std::string& token_str) {
+            ExpectTokenAndNewLine(ts, TokenType::F_CONSTANT, token_str);
+    };
+    // Valid integer constant
+    EXPECT_EQ(tsp->Begin()->Tag(), TokenType::NEWLINE);
+    expect_i_constant_and_newline("8");
+    expect_i_constant_and_newline("11");
+    expect_i_constant_and_newline("9999234567");
+    expect_i_constant_and_newline("1l");
+    expect_i_constant_and_newline("2ull");
+    expect_i_constant_and_newline("0x3LL");
+    expect_i_constant_and_newline("0x0230");
+    expect_i_constant_and_newline("0x3F");
+    expect_i_constant_and_newline("0x1e2");
+    expect_i_constant_and_newline("0x12f");
+    expect_i_constant_and_newline("0707");
+    // Invalid integer constant
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_i_constant_and_newline("2lL");
+    expect_i_constant_and_newline("2Ll");
+    expect_i_constant_and_newline("1d2");
+    expect_i_constant_and_newline("1p2");
+    expect_i_constant_and_newline("1gpp");
+    expect_i_constant_and_newline("1d.2");
+    expect_i_constant_and_newline("1e.2");
+    expect_i_constant_and_newline("1p.2");
+    expect_i_constant_and_newline("0x4G4");
+    expect_i_constant_and_newline("0x1g0x2");
+    expect_i_constant_and_newline("0X1g.0x2");
+    expect_i_constant_and_newline("0x1g.0.");
+    expect_i_constant_and_newline("0x");
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SLASH);
+    expect_i_constant_and_newline("1");
+    expect_i_constant_and_newline("0x.1");
+    expect_i_constant_and_newline("0xge.1");
+    expect_i_constant_and_newline("0908");
+    expect_i_constant_and_newline("0f1g");
+    // Valid floating constant
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_f_constant_and_newline("1.1");
+    expect_f_constant_and_newline(".29");
+    expect_f_constant_and_newline("4.");
+    expect_f_constant_and_newline("5.f");
+    expect_f_constant_and_newline("1.3f");
+    expect_f_constant_and_newline("44677.22l");
+    expect_f_constant_and_newline("1e2");
+    expect_f_constant_and_newline("1.3e2");
+    expect_f_constant_and_newline("22.e+0F");
+    expect_f_constant_and_newline(".1e+2");
+    expect_f_constant_and_newline(".2e-3");
+    expect_f_constant_and_newline("0x1.1e2");
+    expect_f_constant_and_newline("0X1p2");
+    expect_f_constant_and_newline("0x1.3p-2");
+    // Invalid floating constant
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_f_constant_and_newline("7.2fl");
+    expect_f_constant_and_newline(".g");
+    expect_f_constant_and_newline("1ef");
+    expect_f_constant_and_newline("1e.4");
+    expect_f_constant_and_newline("1d.2");
+    expect_f_constant_and_newline("1.d.2");
+    expect_f_constant_and_newline("1.5g2");
+    expect_f_constant_and_newline("322.p2");
+    expect_f_constant_and_newline(".9P2");
+    expect_f_constant_and_newline(".9.2");
+    expect_f_constant_and_newline("0x.g4");
+    expect_f_constant_and_newline("0x7pf3");
+    expect_f_constant_and_newline("0x.3");
+    expect_f_constant_and_newline("0x3.");
+    expect_f_constant_and_newline("0x1.ep+");
+    // 0x1.ep++2
+    Token* tp = tsp->Next();
+    EXPECT_EQ(tp->Tag(), TokenType::F_CONSTANT);
+    EXPECT_EQ(tp->TokenStr(), "0x1.ep+");
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::PLUS);
+    expect_f_constant_and_newline("2");
+    EXPECT_EQ(tsp->Next(), nullptr);
+}
+
 }
