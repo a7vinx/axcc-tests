@@ -355,4 +355,74 @@ TEST_F(ScannerTest, ScanNumConstant) {
     EXPECT_EQ(tsp->Next(), nullptr);
 }
 
+TEST_F(ScannerTest, ScanCharConstant) {
+    InitScanner("testfile5.c");
+    std::unique_ptr<TokenSequence> tsp = scp_->Scan();
+    auto expect_c_constant_and_newline =
+        [&ts = *tsp](const std::string& token_str) {
+            ExpectTokenAndNewLine(ts, TokenType::C_CONSTANT, token_str);
+    };
+    // Valid character constant
+    EXPECT_EQ(tsp->Begin()->Tag(), TokenType::NEWLINE);
+    expect_c_constant_and_newline("'Z'");
+    expect_c_constant_and_newline("'1'");
+    expect_c_constant_and_newline("'@'");
+    expect_c_constant_and_newline("'\\''");
+    expect_c_constant_and_newline("'\"'");
+    expect_c_constant_and_newline("'\\\"'");
+    expect_c_constant_and_newline("'\\\\'");
+    expect_c_constant_and_newline("'\\a'");
+    expect_c_constant_and_newline("'\\n'");
+    expect_c_constant_and_newline("'\\77'");
+    expect_c_constant_and_newline("'\\x88'");
+    expect_c_constant_and_newline("'\\u0041'");
+    expect_c_constant_and_newline("u'\\u7834'");
+    expect_c_constant_and_newline("u'\\xffff'");
+    expect_c_constant_and_newline("U'\\u7834'");
+    expect_c_constant_and_newline("U'\\xffffffff'");
+    expect_c_constant_and_newline("U'\\U0001f34c'");
+    expect_c_constant_and_newline("L'\\u7834'");
+    expect_c_constant_and_newline("L'\\U0001f34c'");
+    expect_c_constant_and_newline("L'\\xffffffff'");
+    // multi-character character constant
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_c_constant_and_newline("'\\578'");
+    expect_c_constant_and_newline("'AAU'");
+    expect_c_constant_and_newline("'\\u78348'");
+    // unicode character literals may not contain multiple characters
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_c_constant_and_newline("u'AB'");
+    expect_c_constant_and_newline("u'\\1F'");
+    expect_c_constant_and_newline("U'\\u78348'");
+    // wchar_t character literals may not contain multiple characters
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_c_constant_and_newline("L'AB'");
+    // incomplete universal character name
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_c_constant_and_newline("'\\u2d3'");
+    expect_c_constant_and_newline("'\\U576F6'");
+    expect_c_constant_and_newline("u'\\U1X'");
+    // character too large for enclosing character literal type
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_c_constant_and_newline("'\\u7834'");
+    expect_c_constant_and_newline("'\\U0001f34c'");
+    expect_c_constant_and_newline("u'\\U0001f34c'");
+    // hex escape sequence out of range
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_c_constant_and_newline("'\\xfff'");
+    expect_c_constant_and_newline("'\\xfffffH'");
+    expect_c_constant_and_newline("u'\\xfffff'");
+    // octal escape sequence out of range
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_c_constant_and_newline("'\\7777'");
+    // unknown escape sequence '\*'
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_c_constant_and_newline("'\\@'");
+    expect_c_constant_and_newline("'\\9dd'");
+    // \x used with no following hex digits
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_c_constant_and_newline("'\\xgg'");
+    EXPECT_EQ(tsp->Next(), nullptr);
+}
+
 }
