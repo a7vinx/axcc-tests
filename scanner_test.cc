@@ -425,4 +425,48 @@ TEST_F(ScannerTest, ScanCharConstant) {
     EXPECT_EQ(tsp->Next(), nullptr);
 }
 
+TEST_F(ScannerTest, ScanStrLiteral) {
+    InitScanner("testfile6.c");
+    std::unique_ptr<TokenSequence> tsp = scp_->Scan();
+    auto expect_s_literal_and_newline =
+        [&ts = *tsp](const std::string& token_str) {
+            ExpectTokenAndNewLine(ts, TokenType::STRING, token_str);
+    };
+    // Valid string literals
+    EXPECT_EQ(tsp->Begin()->Tag(), TokenType::NEWLINE);
+    expect_s_literal_and_newline("\"test string\"");
+    expect_s_literal_and_newline("\"@str\"");
+    expect_s_literal_and_newline("\"\\'\\\"'\"");
+    expect_s_literal_and_newline("\"\\u7834\\u7834\"");
+    expect_s_literal_and_newline("\"\\029x\"");
+    expect_s_literal_and_newline("u8\"\\u7834\\u7834\"");
+    expect_s_literal_and_newline("u8\"\\x88\\x76\\x23\"");
+    expect_s_literal_and_newline("u\"\\u7834\\u7834\"");
+    expect_s_literal_and_newline("u\"\\xffff\\xffffstr\"");
+    expect_s_literal_and_newline("U\"\\u7834\\u7834\"");
+    expect_s_literal_and_newline("U\"str\\U0001f34c\\U0001f34c\"");
+    expect_s_literal_and_newline("L\"\\u7834\\u7834\"");
+    expect_s_literal_and_newline("L\"str\\U0001f34c\\U0001f34c\"");
+    // incomplete universal character name
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_s_literal_and_newline("\"\\u2d3str\"");
+    expect_s_literal_and_newline("\"str\\U576F6\"");
+    expect_s_literal_and_newline("u\"@\\U1X\"");
+    // hex escape sequence out of range
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_s_literal_and_newline("\"str\\xfff\"");
+    expect_s_literal_and_newline("\"\\xfffffH__\"");
+    // octal escape sequence out of range
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_s_literal_and_newline("\"str\\7777\"");
+    // unknown escape sequence '\*'
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_s_literal_and_newline("\"@**\\\\\\@\"");
+    expect_s_literal_and_newline("\"str\\9dd\"");
+    // \x used with no following hex digits
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_s_literal_and_newline("\"__\\xgg\"");
+    EXPECT_EQ(tsp->Next(), nullptr);
+}
+
 }
