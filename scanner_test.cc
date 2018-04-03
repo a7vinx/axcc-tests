@@ -28,6 +28,7 @@ protected:
     char Begin() const { return scp_->Begin(); }
     char CurChar() const { return scp_->CurChar(); }
     char Next() { return scp_->Next(); }
+    char NextN(int n) { return scp_->NextN(n); }
     char LookAhead() const { return scp_->LookAhead(); }
     char LookAheadN(int n) const { return scp_->LookAheadN(n); }
     bool NextIs(char c) const { return scp_->NextIs(c); }
@@ -140,6 +141,55 @@ TEST_F(ScannerTest, Traverse) {
     EXPECT_EQ(CurLineLen(), 9);
     EXPECT_EQ(CurRow(), 2);
     EXPECT_EQ(CurColumn(), 5);
+}
+
+// Traverse with backslash-newline
+TEST_F(ScannerTest, TraverseWithBSNL) {
+    InitScanner("testfile1_bsnl.c");
+    EXPECT_EQ(CurLineLen(), 1);
+    EXPECT_EQ(*CurLinePtr(), '\\');
+    EXPECT_EQ(*CurCharPtr(), '\\');
+
+    // Begin()
+    EXPECT_EQ(Begin(), 'i');
+    EXPECT_EQ(CurRow(), 2);
+    EXPECT_EQ(CurColumn(), 1);
+    NextN(12);
+    EXPECT_EQ(*CurCharPtr(), ' ');
+    // LookAhead()
+    EXPECT_EQ(LookAhead(), 'r');
+    EXPECT_EQ(*CurCharPtr(), ' ');
+    // LookAheadN()
+    EXPECT_EQ(LookAheadN(6), 'n');
+    EXPECT_EQ(LookAheadN(11), '}');
+    EXPECT_EQ(LookAheadN(12), '\n');
+    EXPECT_EQ(LookAheadN(13), 0);
+    // Next()
+    EXPECT_EQ(Next(), 'r');
+    EXPECT_EQ(*CurCharPtr(), 'r');
+    EXPECT_EQ(*CurLinePtr(), 'r');
+    EXPECT_EQ(CurLineLen(), 5);
+    EXPECT_EQ(CurRow(), 3);
+    EXPECT_EQ(CurColumn(), 1);
+    // bool Try(const std::string&);
+    EXPECT_TRUE(Try("eturn"));
+    EXPECT_EQ(*CurCharPtr(), 'n');
+    EXPECT_EQ(*CurLinePtr(), 'r');
+    EXPECT_EQ(CurLineLen(), 5);
+    EXPECT_EQ(CurRow(), 4);
+    EXPECT_EQ(CurColumn(), 2);
+    // Next()
+    NextN(3);
+    EXPECT_EQ(Next(), '\n');
+    // bool Try(char c);
+    EXPECT_TRUE(Try('}'));
+    EXPECT_EQ(*CurCharPtr(), '}');
+    EXPECT_EQ(*CurLinePtr(), '}');
+    EXPECT_EQ(CurLineLen(), 1);
+    EXPECT_EQ(CurRow(), 6);
+    EXPECT_EQ(CurColumn(), 1);
+    EXPECT_EQ(Next(), '\n');
+    EXPECT_EQ(Next(), 0);
 }
 
 TEST_F(ScannerTest, MakeTokenInTS) {
