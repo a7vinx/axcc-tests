@@ -216,7 +216,7 @@ TEST_F(ScannerTest, MakeTokenInTS) {
 }
 
 TEST_F(ScannerTest, ScanPunctuator) {
-    InitScanner("testfile2.c");
+    InitScanner("punctuators.c");
     std::unique_ptr<TokenSequence> tsp = scp_->Scan();
     EXPECT_EQ(tsp->Begin()->Tag(), TokenType::LPAR);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::RPAR);
@@ -225,7 +225,7 @@ TEST_F(ScannerTest, ScanPunctuator) {
     Token* tp = tsp->Next();
     EXPECT_EQ(tp->Tag(), TokenType::LBRACE);
     EXPECT_TRUE(tp->TokenStr().empty());
-    EXPECT_EQ(*(tp->LocPtr()->fnamep), "testfile2.c");
+    EXPECT_EQ(*(tp->LocPtr()->fnamep), "punctuators.c");
     EXPECT_EQ(tp->LocPtr()->row, 2);
     EXPECT_EQ(tp->LocPtr()->column, 1);
     EXPECT_EQ(*(tp->LocPtr()->linep), '{');
@@ -291,7 +291,7 @@ TEST_F(ScannerTest, ScanPunctuator) {
 }
 
 TEST_F(ScannerTest, SkipComment) {
-    InitScanner("testfile3.c");
+    InitScanner("comments.c");
     std::unique_ptr<TokenSequence> tsp = scp_->Scan();
     EXPECT_EQ(tsp->Begin()->Tag(), TokenType::SEMI);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
@@ -319,7 +319,7 @@ void ExpectTokenAndNewLine(TokenSequence& ts, TokenType type,
 }
 
 TEST_F(ScannerTest, ScanNumConstant) {
-    InitScanner("testfile4.c");
+    InitScanner("num_constants.c");
     std::unique_ptr<TokenSequence> tsp = scp_->Scan();
     auto expect_i_constant_and_newline =
         [&ts = *tsp](const std::string& token_str) {
@@ -404,7 +404,7 @@ TEST_F(ScannerTest, ScanNumConstant) {
 }
 
 TEST_F(ScannerTest, ScanCharConstant) {
-    InitScanner("testfile5.c");
+    InitScanner("char_constants.c");
     std::unique_ptr<TokenSequence> tsp = scp_->Scan();
     auto expect_c_constant_and_newline =
         [&ts = *tsp](const std::string& token_str) {
@@ -474,7 +474,7 @@ TEST_F(ScannerTest, ScanCharConstant) {
 }
 
 TEST_F(ScannerTest, ScanStrLiteral) {
-    InitScanner("testfile6.c");
+    InitScanner("str_literals.c");
     std::unique_ptr<TokenSequence> tsp = scp_->Scan();
     auto expect_s_literal_and_newline =
         [&ts = *tsp](const std::string& token_str) {
