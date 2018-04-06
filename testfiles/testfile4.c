@@ -17,14 +17,12 @@
 1p2
 1gpp
 1d.2
-1e.2
 1p.2
 0x4G4
 0x1g0x2
 0X1g.0x2
 0x1g.0.
 0x/1
-0x.1
 0xge.1
 0908
 0f1g
@@ -45,10 +43,8 @@
 0x1.3p-2
 // Invalid floating constant
 7.2fl
-.g
 1ef
 1e.4
-1d.2
 1.d.2
 1.5g2
 322.p2

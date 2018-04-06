@@ -350,16 +350,17 @@ TEST_F(ScannerTest, ScanNumConstant) {
     expect_i_constant_and_newline("1p2");
     expect_i_constant_and_newline("1gpp");
     expect_i_constant_and_newline("1d.2");
-    expect_i_constant_and_newline("1e.2");
     expect_i_constant_and_newline("1p.2");
     expect_i_constant_and_newline("0x4G4");
     expect_i_constant_and_newline("0x1g0x2");
     expect_i_constant_and_newline("0X1g.0x2");
     expect_i_constant_and_newline("0x1g.0.");
-    expect_i_constant_and_newline("0x");
+    // 0x/1
+    Token* tp = tsp->Next();
+    EXPECT_EQ(tp->Tag(), TokenType::I_CONSTANT);
+    EXPECT_EQ(tp->TokenStr(), "0x");
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::SLASH);
     expect_i_constant_and_newline("1");
-    expect_i_constant_and_newline("0x.1");
     expect_i_constant_and_newline("0xge.1");
     expect_i_constant_and_newline("0908");
     expect_i_constant_and_newline("0f1g");
@@ -382,10 +383,8 @@ TEST_F(ScannerTest, ScanNumConstant) {
     // Invalid floating constant
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     expect_f_constant_and_newline("7.2fl");
-    expect_f_constant_and_newline(".g");
     expect_f_constant_and_newline("1ef");
     expect_f_constant_and_newline("1e.4");
-    expect_f_constant_and_newline("1d.2");
     expect_f_constant_and_newline("1.d.2");
     expect_f_constant_and_newline("1.5g2");
     expect_f_constant_and_newline("322.p2");
@@ -395,13 +394,12 @@ TEST_F(ScannerTest, ScanNumConstant) {
     expect_f_constant_and_newline("0x7pf3");
     expect_f_constant_and_newline("0x.3");
     expect_f_constant_and_newline("0x3.");
-    expect_f_constant_and_newline("0x1.ep+");
     // 0x1.ep++2
-    Token* tp = tsp->Next();
+    tp = tsp->Next();
     EXPECT_EQ(tp->Tag(), TokenType::F_CONSTANT);
     EXPECT_EQ(tp->TokenStr(), "0x1.ep+");
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::PLUS);
-    expect_f_constant_and_newline("2");
+    expect_i_constant_and_newline("2");
     EXPECT_EQ(tsp->Next(), nullptr);
 }
 
