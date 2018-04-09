@@ -349,6 +349,8 @@ TEST_F(ScannerTest, ScanNumConstant) {
     expect_i_constant_and_newline("1d2");
     expect_i_constant_and_newline("1p2");
     expect_i_constant_and_newline("1gpp");
+    expect_i_constant_and_newline("11_");
+    expect_i_constant_and_newline("1_.p");
     expect_i_constant_and_newline("1d.2");
     expect_i_constant_and_newline("1p.2");
     expect_i_constant_and_newline("0x4G4");
