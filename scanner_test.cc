@@ -519,4 +519,55 @@ TEST_F(ScannerTest, ScanStrLiteral) {
     EXPECT_EQ(tsp->Next(), nullptr);
 }
 
+TEST_F(ScannerTest, ScanIdent) {
+    InitScanner("idents.c");
+    std::unique_ptr<TokenSequence> tsp = scp_->Scan();
+    auto expect_ident_and_newline =
+        [&ts = *tsp](const std::string& token_str) {
+            ExpectTokenAndNewLine(ts, TokenType::IDENTIFIER, token_str);
+    };
+    EXPECT_EQ(tsp->Begin()->Tag(), TokenType::INT);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::BOOL);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::ALIGNOF);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_ident_and_newline("_bool");
+    expect_ident_and_newline("longlong");
+    expect_ident_and_newline("try");
+    expect_ident_and_newline("abcd");
+    expect_ident_and_newline("\\u7834");
+    expect_ident_and_newline("uu\\u7834");
+    expect_ident_and_newline("uu\\u783");
+    expect_ident_and_newline("\\U0001f34cuu");
+    expect_ident_and_newline("\\U0001f34uu");
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::INVALID);
+    expect_ident_and_newline("ident");
+    // ident$ident
+    Token* tp = tsp->Next();
+    EXPECT_EQ(tp->Tag(), TokenType::IDENTIFIER);
+    EXPECT_EQ(tp->TokenStr(), "ident");
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::INVALID);
+    expect_ident_and_newline("ident");
+    // @ident
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::INVALID);
+    expect_ident_and_newline("ident");
+    expect_ident_and_newline("_Ident");
+    expect_ident_and_newline("_i11");
+    // 11aa
+    tp = tsp->Next();
+    EXPECT_EQ(tp->Tag(), TokenType::I_CONSTANT);
+    EXPECT_EQ(tp->TokenStr(), "11aa");
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
+    expect_ident_and_newline("_11");
+    expect_ident_and_newline("A_IO__");
+    // UU\\u7834
+    tp = tsp->Next();
+    EXPECT_EQ(tp->Tag(), TokenType::IDENTIFIER);
+    EXPECT_EQ(tp->TokenStr(), "UU");
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::INVALID);
+    expect_ident_and_newline("\\u7834");
+    EXPECT_EQ(tsp->Next(), nullptr);
+}
+
 }
