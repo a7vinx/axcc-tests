@@ -287,7 +287,7 @@ TEST_F(ScannerTest, ScanPunctuator) {
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::INVALID);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::INVALID);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
-    EXPECT_EQ(tsp->Next(), nullptr);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::END);
 }
 
 TEST_F(ScannerTest, SkipComment) {
@@ -307,7 +307,7 @@ TEST_F(ScannerTest, SkipComment) {
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::SLASH);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::SEMI);
-    EXPECT_EQ(tsp->Next(), nullptr);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::END);
 }
 
 void ExpectTokenAndNewLine(TokenSequence& ts, TokenType type,
@@ -402,7 +402,7 @@ TEST_F(ScannerTest, ScanNumConstant) {
     EXPECT_EQ(tp->TokenStr(), "0x1.ep+");
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::PLUS);
     expect_i_constant_and_newline("2");
-    EXPECT_EQ(tsp->Next(), nullptr);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::END);
 }
 
 TEST_F(ScannerTest, ScanCharConstant) {
@@ -472,7 +472,7 @@ TEST_F(ScannerTest, ScanCharConstant) {
     // \x used with no following hex digits
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     expect_c_constant_and_newline("'\\xgg'");
-    EXPECT_EQ(tsp->Next(), nullptr);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::END);
 }
 
 TEST_F(ScannerTest, ScanStrLiteral) {
@@ -516,7 +516,7 @@ TEST_F(ScannerTest, ScanStrLiteral) {
     // \x used with no following hex digits
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     expect_s_literal_and_newline("\"__\\xgg\"");
-    EXPECT_EQ(tsp->Next(), nullptr);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::END);
 }
 
 TEST_F(ScannerTest, ScanIdent) {
@@ -567,7 +567,7 @@ TEST_F(ScannerTest, ScanIdent) {
     EXPECT_EQ(tp->TokenStr(), "UU");
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::INVALID);
     expect_ident_and_newline("\\u7834");
-    EXPECT_EQ(tsp->Next(), nullptr);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::END);
 }
 
 TEST_F(ScannerTest, ScanAll) {
@@ -673,7 +673,7 @@ TEST_F(ScannerTest, ScanAll) {
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::RBRACE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
-    EXPECT_EQ(tsp->Next(), nullptr);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::END);
 }
 
 }

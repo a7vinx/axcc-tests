@@ -64,7 +64,7 @@ TEST_F(TokenSequenceTest, Iteration) {
     tp = ts_.Next();
     EXPECT_EQ(tp->Tag(), TokenType::IDENTIFIER);
     EXPECT_EQ(tp->TokenStr(), "ident3");
-    EXPECT_EQ(ts_.Next(), nullptr);
+    EXPECT_EQ(ts_.Next()->Tag(), TokenType::END);
 }
 
 TEST_F(TokenSequenceTest, Erase) {
@@ -72,9 +72,9 @@ TEST_F(TokenSequenceTest, Erase) {
     ts_.ErasePrevN(1);
     EXPECT_EQ(ts_.Begin()->TokenStr(), "ident2");
     EXPECT_EQ(ts_.Next()->TokenStr(), "ident3");
-    EXPECT_EQ(ts_.Next(), nullptr);
+    EXPECT_EQ(ts_.Next()->Tag(), TokenType::END);
     ts_.ErasePrevN(2);
-    EXPECT_EQ(ts_.Begin(), nullptr);
+    EXPECT_EQ(ts_.Begin()->Tag(), TokenType::END);
 }
 
 TEST_F(TokenSequenceTest, CopyConstruct) {
@@ -91,7 +91,7 @@ TEST_F(TokenSequenceTest, CopyConstruct) {
     EXPECT_EQ(tp->LocPtr().use_count(), 2);
     EXPECT_EQ(ts_copy.Next()->TokenStr(), "ident2");
     EXPECT_EQ(ts_copy.Next()->TokenStr(), "ident3");
-    EXPECT_EQ(ts_copy.Next(), nullptr);
+    EXPECT_EQ(ts_copy.Next()->Tag(), TokenType::END);
 }
 
 TEST_F(TokenSequenceTest, MoveConstruct) {
@@ -101,14 +101,14 @@ TEST_F(TokenSequenceTest, MoveConstruct) {
     EXPECT_FALSE(ts_.Begin());
     EXPECT_FALSE(ts_.Next());
     EXPECT_FALSE(ts_.Next());
-    EXPECT_EQ(ts_.Next(), nullptr);
+    EXPECT_EQ(ts_.Next()->Tag(), TokenType::END);
     // Check the new one.
     Token* tp = ts_move.Begin();
     EXPECT_EQ(tp->TokenStr(), "ident1");
     EXPECT_EQ(tp->LocPtr().use_count(), 2);
     EXPECT_EQ(ts_move.Next()->TokenStr(), "ident2");
     EXPECT_EQ(ts_move.Next()->TokenStr(), "ident3");
-    EXPECT_EQ(ts_move.Next(), nullptr);
+    EXPECT_EQ(ts_move.Next()->Tag(), TokenType::END);
 }
 
 TEST_F(TokenSequenceTest, Replace) {
@@ -129,7 +129,7 @@ TEST_F(TokenSequenceTest, Replace) {
     ts_.ReplacePrevN(5, tv);
     EXPECT_EQ(ts_.Begin()->TokenStr(), "ident4");
     EXPECT_EQ(ts_.Next()->TokenStr(), "ident5");
-    EXPECT_EQ(ts_.Next(), nullptr);
+    EXPECT_EQ(ts_.Next()->Tag(), TokenType::END);
 }
 
 }
