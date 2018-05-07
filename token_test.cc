@@ -98,10 +98,7 @@ TEST_F(TokenSequenceTest, MoveConstruct) {
     EXPECT_EQ(ts_.Begin()->LocPtr().use_count(), 2);
     TokenSequence ts_move{std::move(ts_)};
     // Check the origin object.
-    EXPECT_FALSE(ts_.Begin());
-    EXPECT_FALSE(ts_.Next());
-    EXPECT_FALSE(ts_.Next());
-    EXPECT_EQ(ts_.Next()->Tag(), TokenType::END);
+    EXPECT_EQ(ts_.Begin()->Tag(), TokenType::END);
     // Check the new one.
     Token* tp = ts_move.Begin();
     EXPECT_EQ(tp->TokenStr(), "ident1");
