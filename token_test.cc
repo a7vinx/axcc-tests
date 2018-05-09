@@ -73,7 +73,7 @@ TEST_F(TokenSequenceTest, Erase) {
     EXPECT_EQ(ts_.Begin()->TokenStr(), "ident2");
     EXPECT_EQ(ts_.Next()->TokenStr(), "ident3");
     EXPECT_EQ(ts_.Next()->Tag(), TokenType::END);
-    ts_.ErasePrevN(2);
+    ts_.ErasePrevN(3);
     EXPECT_EQ(ts_.Begin()->Tag(), TokenType::END);
 }
 
