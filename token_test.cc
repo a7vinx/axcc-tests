@@ -23,9 +23,9 @@ protected:
     TokenSequenceTest() : fname_{"testname"},
                           fcontent_{"ident1 ident2 ident3"} {
         ts_.EmplaceBack(TokenType::IDENTIFIER, "ident1",
-                        std::make_shared<const SourceLocation>(
-                            SourceLocation{&fname_, 1, 1,
-                                           fcontent_.cbegin(), 20}));
+                        std::make_shared<SourceLocation>(
+                                 SourceLocation{&fname_, 1, 1,
+                                                fcontent_.cbegin(), 20}));
         ts_.EmplaceBack(TokenType::IDENTIFIER, "ident2");
         ts_.EmplaceBack(TokenType::IDENTIFIER, "ident3");
     }
