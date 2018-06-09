@@ -34,7 +34,7 @@ protected:
     bool NextIs(char c) const { return scp_->NextIs(c); }
     bool Try(char c) { return scp_->Try(c); }
     bool Try(const std::string& chars) { return scp_->Try(chars); }
-    unsigned int FindNext(char c) { return scp_->FindNext(c); }
+    unsigned int FindNextNewline() { return scp_->FindNextNewline(); }
     void MakeTokenInTS(const TokenType& tag, const std::string& token_str) {
         return scp_->MakeTokenInTS(tag, token_str);
     }
@@ -45,10 +45,14 @@ protected:
     std::unique_ptr<Scanner> scp_{};
 };
 
-TEST_F(ScannerTest, FindNext) {
+TEST_F(ScannerTest, FindNextNewline) {
     InitScanner("testfile1.c");
-    EXPECT_EQ(FindNext('\n'), 12);
-    EXPECT_EQ(FindNext('9'), 0);
+    EXPECT_EQ(FindNextNewline(), 12);
+    NextN(13);
+    EXPECT_EQ(FindNextNewline(), 9);
+    NextN(11);
+    EXPECT_EQ(FindNextNewline(), 0);
+
 }
 
 TEST_F(ScannerTest, Traverse) {
