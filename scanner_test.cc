@@ -314,7 +314,7 @@ TEST_F(ScannerTest, SkipComment) {
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::END);
 }
 
-void ExpectTokenAndNewLine(TokenSequence& ts, TokenType type,
+void ExpectTokenAndNewline(TokenSequence& ts, TokenType type,
                            const std::string& token_str) {
     Token* tp = ts.Next();
     EXPECT_EQ(tp->Tag(), type);
@@ -327,11 +327,11 @@ TEST_F(ScannerTest, ScanNumConstant) {
     std::unique_ptr<TokenSequence> tsp = scp_->Scan();
     auto expect_i_constant_and_newline =
         [&ts = *tsp](const std::string& token_str) {
-            ExpectTokenAndNewLine(ts, TokenType::I_CONSTANT, token_str);
+            ExpectTokenAndNewline(ts, TokenType::I_CONSTANT, token_str);
     };
     auto expect_f_constant_and_newline =
         [&ts = *tsp](const std::string& token_str) {
-            ExpectTokenAndNewLine(ts, TokenType::F_CONSTANT, token_str);
+            ExpectTokenAndNewline(ts, TokenType::F_CONSTANT, token_str);
     };
     // Valid integer constant
     EXPECT_EQ(tsp->Begin()->Tag(), TokenType::NEWLINE);
@@ -414,7 +414,7 @@ TEST_F(ScannerTest, ScanCharConstant) {
     std::unique_ptr<TokenSequence> tsp = scp_->Scan();
     auto expect_c_constant_and_newline =
         [&ts = *tsp](const std::string& token_str) {
-            ExpectTokenAndNewLine(ts, TokenType::C_CONSTANT, token_str);
+            ExpectTokenAndNewline(ts, TokenType::C_CONSTANT, token_str);
     };
     // Valid character constant
     EXPECT_EQ(tsp->Begin()->Tag(), TokenType::NEWLINE);
@@ -484,7 +484,7 @@ TEST_F(ScannerTest, ScanStrLiteral) {
     std::unique_ptr<TokenSequence> tsp = scp_->Scan();
     auto expect_s_literal_and_newline =
         [&ts = *tsp](const std::string& token_str) {
-            ExpectTokenAndNewLine(ts, TokenType::STRING, token_str);
+            ExpectTokenAndNewline(ts, TokenType::STRING, token_str);
     };
     // Valid string literals
     EXPECT_EQ(tsp->Begin()->Tag(), TokenType::NEWLINE);
@@ -528,7 +528,7 @@ TEST_F(ScannerTest, ScanIdent) {
     std::unique_ptr<TokenSequence> tsp = scp_->Scan();
     auto expect_ident_and_newline =
         [&ts = *tsp](const std::string& token_str) {
-            ExpectTokenAndNewLine(ts, TokenType::IDENTIFIER, token_str);
+            ExpectTokenAndNewline(ts, TokenType::IDENTIFIER, token_str);
     };
     EXPECT_EQ(tsp->Begin()->Tag(), TokenType::INT);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
