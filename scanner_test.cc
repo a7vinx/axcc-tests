@@ -5,6 +5,13 @@
 
 namespace axcc {
 
+TEST(FileExistTest, FileExist) {
+    EXPECT_TRUE(FileExist("../scanner_test.cc"));
+    EXPECT_FALSE(FileExist("scanner_test_not_exist.cc"));
+    EXPECT_FALSE(FileExist("../testfiles"));
+    EXPECT_TRUE(FileExist("../testfiles/testfile1.c"));
+}
+
 TEST(ReadFileTest, ReadFile) {
     EXPECT_TRUE(ReadFile("file_not_exist").empty());
     EXPECT_EQ(ReadFile("testfile1.c"), "int main() {\nreturn 0;\n}\n");
