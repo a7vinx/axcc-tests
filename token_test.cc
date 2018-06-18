@@ -111,7 +111,7 @@ TEST_F(TokenSequenceTest, MoveConstruct) {
 TEST_F(TokenSequenceTest, Replace) {
     SourceLocation loc{&fname_, 2, 2, fcontent_.cbegin(), 20};
     TokenSequence ts_copy{ts_};
-    std::vector<Token> tv{{TokenType::IDENTIFIER, "ident4"},
+    std::list<Token> tv{{TokenType::IDENTIFIER, "ident4"},
                           {TokenType::IDENTIFIER, "ident5"}};
     EXPECT_EQ(ts_.Begin()->TokenStr(), "ident1");
     EXPECT_EQ(ts_.Next()->TokenStr(), "ident2");
