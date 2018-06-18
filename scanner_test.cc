@@ -213,7 +213,7 @@ TEST_F(ScannerTest, MakeTokenInTS) {
     // Check the first token
     Token* tp = TS()->Begin();
     EXPECT_EQ(tp->Tag(), TokenType::INT);
-    EXPECT_TRUE(tp->TokenStr().empty());
+    EXPECT_EQ(tp->TokenStr(), "int");
 
     // Check the second token
     tp = TS()->Next();
@@ -235,7 +235,7 @@ TEST_F(ScannerTest, ScanPunctuator) {
     // Do a comprehensive check
     Token* tp = tsp->Next();
     EXPECT_EQ(tp->Tag(), TokenType::LBRACE);
-    EXPECT_TRUE(tp->TokenStr().empty());
+    EXPECT_EQ(tp->TokenStr(), "{");
     EXPECT_EQ(*(tp->LocPtr()->fnamep), "punctuators.c");
     EXPECT_EQ(tp->LocPtr()->row, 2);
     EXPECT_EQ(tp->LocPtr()->column, 1);
