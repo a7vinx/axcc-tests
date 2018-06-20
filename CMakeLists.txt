@@ -49,3 +49,11 @@ add_executable(scanner_test scanner_test.cc axcc/src/token.cc
 target_link_libraries(scanner_test gtest_main)
 add_test(NAME run_scanner_test COMMAND scanner_test
          WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/testfiles)
+
+# Do not include preprocessor.cc because it has already been included by
+# preprocessor_test.cc
+add_executable(preprocessor_test preprocessor_test.cc axcc/src/token.cc
+               axcc/src/scanner.cc)
+target_link_libraries(preprocessor_test gtest_main)
+add_test(NAME run_preprocessor_test COMMAND preprocessor_test
+         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/testfiles)
