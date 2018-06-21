@@ -26,6 +26,10 @@ protected:
         return ppp_->HasMacro(ident); }
     const Preprocessor::Macro* GetMacro(const std::string& ident) const {
         return ppp_->GetMacro(ident); }
+    std::string FindHeader(const std::string& fname,
+                           bool include_cur_path,
+                           const std::string& cur_path) {
+        return ppp_->FindHeader(fname, include_cur_path, cur_path); }
 
     std::map<std::string, std::string> files_{};
     std::unique_ptr<TokenSequence> tsp_{};
@@ -63,6 +67,24 @@ TEST_F(PreprocessorTest, MacrosOperation) {
     // test GetMacro()
     EXPECT_EQ(GetMacro("m1"), nullptr);
     EXPECT_NE(GetMacro("m2"), nullptr);
+}
+
+TEST_F(PreprocessorTest, FindHeader) {
+    InitPreprocessor("testfile1.c");
+    EXPECT_EQ(FindHeader("file_not_exist.cc", false, ""), "");
+    EXPECT_EQ(FindHeader("file_not_exist.cc", true,
+                         "../testfiles/testfile1.c"), "");
+    EXPECT_EQ(FindHeader("idents.c", true,
+                         "../testfiles/testfile1.c"), "../testfiles/idents.c");
+    EXPECT_EQ(FindHeader("idents.c", true, "testfile1.c"), "idents.c");
+    EXPECT_EQ(FindHeader("stdio.h", false, ""), "/usr/include/stdio.h");
+    // It should only search for a regular file.
+    EXPECT_EQ(FindHeader("testfiles", true, "../preprocessor_test.cc"), "");
+    // It should simplify the path.
+    EXPECT_EQ(FindHeader("idents.c", true,
+                         "../testfiles/../testfiles/testfile1.c"),
+                         "../testfiles/idents.c");
+    EXPECT_EQ(FindHeader("idents.c", true, "./testfile1.c"), "./idents.c");
 }
 
 }
