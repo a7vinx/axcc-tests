@@ -9,13 +9,13 @@ TEST(LocStrTest, LocationString) {
         "testcontent line1\ntestcontent line2\n\t testcontent line3"};
     SourceLocation loc1{&fname, 1, 1, fcontent.cbegin(), 17};
     EXPECT_EQ(LocStr(loc1),
-            "testname:1:1: testcontent line1\n              ^\n");
+            "testname:1:1: testcontent line1\n              ^");
     SourceLocation loc2{&fname, 2, 13, std::next(fcontent.cbegin(), 18), 17};
     EXPECT_EQ(LocStr(loc2),
-            "testname:2:13: testcontent line2\n                           ^\n");
+            "testname:2:13: testcontent line2\n                           ^");
     SourceLocation loc3{&fname, 3, 15, std::next(fcontent.cbegin(), 36), 19};
     EXPECT_EQ(LocStr(loc3),
-            "testname:3:15: testcontent line3\n                           ^\n");
+            "testname:3:15: testcontent line3\n                           ^");
 }
 
 class TokenSequenceTest : public ::testing::Test {
