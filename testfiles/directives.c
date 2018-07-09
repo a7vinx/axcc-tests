@@ -53,6 +53,8 @@ void f2();
 // extra tokens at end of directive
 #ifdef macro_not_exist extra tokens
 #endif
+// unterminated conditional directive
+#ifdef obj_macro2
 
 // #line
 #line 100 "new_name"

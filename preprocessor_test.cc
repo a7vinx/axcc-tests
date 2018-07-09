@@ -178,6 +178,8 @@ TEST_F(PreprocessorTest, HandlePPDirectives) {
         "\"name_in_quotes\":109:2: #error",
         "this is an \"error\"",
         "\"name_in_quotes\":110:2: #error this is an \"error\"",
+        "unterminated conditional directive",
+        "directives.c:57:8: #ifdef obj_macro2"
     };
     ExpectErrorList(output_buf, err_vec);
     // Set the original buffer to std::cerr
