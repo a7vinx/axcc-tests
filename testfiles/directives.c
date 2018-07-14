@@ -17,6 +17,7 @@
 #define defined
 // missing ')' in macro parameter list
 #define func_macro_wrong(p1,
+#define func_macro_wrong(..., p1)
 // expected identifier in macro parameter list
 #define func_macro_wrong(@, +) something
 // expected comma in macro parameter list
