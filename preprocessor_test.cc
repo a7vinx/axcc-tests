@@ -188,4 +188,150 @@ TEST_F(PreprocessorTest, HandlePPDirectives) {
     std::cerr.rdbuf(orig_buf);
 }
 
+TEST_F(PreprocessorTest, ExpandMacro) {
+    InitPreprocessor("macros.c");
+    // Capture std::cerr to check the output
+    std::stringstream output_buf;
+    std::streambuf *orig_buf = std::cerr.rdbuf(output_buf.rdbuf());
+    // Perform preprocessing
+    ppp_->Preprocess();
+    // Check the token sequence that has been preprocessed.
+    std::list<Token> preprocessed{
+        // something
+        {TokenType::IDENTIFIER, "something"},
+        // ()
+        {TokenType::LPAR},
+        {TokenType::RPAR},
+        // "macros.c"
+        {TokenType::STRING, "\"macros.c\""},
+        // 8
+        {TokenType::I_CONSTANT, "8"},
+        // (2 + 2)
+        {TokenType::LPAR},
+        {TokenType::I_CONSTANT, "2"},
+        {TokenType::PLUS},
+        {TokenType::I_CONSTANT, "2"},
+        {TokenType::RPAR},
+        // fm2
+        {TokenType::IDENTIFIER, "fm2"},
+        // (arg1 + arg2)
+        {TokenType::LPAR},
+        {TokenType::IDENTIFIER, "arg1"},
+        {TokenType::PLUS},
+        {TokenType::IDENTIFIER, "arg2"},
+        {TokenType::RPAR},
+        // (arg1 + )
+        {TokenType::LPAR},
+        {TokenType::IDENTIFIER, "arg1"},
+        {TokenType::PLUS},
+        {TokenType::RPAR},
+        // (@ + 1, 2,,)
+        {TokenType::LPAR},
+        {TokenType::INVALID, "@"},
+        {TokenType::PLUS},
+        {TokenType::I_CONSTANT, "1"},
+        {TokenType::COMMA},
+        {TokenType::I_CONSTANT, "2"},
+        {TokenType::COMMA},
+        {TokenType::COMMA},
+        {TokenType::RPAR},
+        // (something + () + (2 + 2), (arg1 + arg2 + arg1 - arg2))
+        {TokenType::LPAR},
+        {TokenType::IDENTIFIER, "something"},
+        {TokenType::PLUS},
+        {TokenType::LPAR},
+        {TokenType::RPAR},
+        {TokenType::PLUS},
+        {TokenType::LPAR},
+        {TokenType::I_CONSTANT, "2"},
+        {TokenType::PLUS},
+        {TokenType::I_CONSTANT, "2"},
+        {TokenType::RPAR},
+        {TokenType::COMMA},
+        {TokenType::LPAR},
+        {TokenType::IDENTIFIER, "arg1"},
+        {TokenType::PLUS},
+        {TokenType::IDENTIFIER, "arg2"},
+        {TokenType::PLUS},
+        {TokenType::IDENTIFIER, "arg1"},
+        {TokenType::MINUS},
+        {TokenType::IDENTIFIER, "arg2"},
+        {TokenType::RPAR},
+        {TokenType::RPAR},
+        // (arg1 + arg2)
+        {TokenType::LPAR},
+        {TokenType::IDENTIFIER, "arg1"},
+        {TokenType::PLUS},
+        {TokenType::IDENTIFIER, "arg2"},
+        {TokenType::RPAR},
+        // fm3(arg1, arg2, arg3)
+        {TokenType::IDENTIFIER, "fm3"},
+        {TokenType::LPAR},
+        {TokenType::IDENTIFIER, "arg1"},
+        {TokenType::COMMA},
+        {TokenType::IDENTIFIER, "arg2"},
+        {TokenType::COMMA},
+        {TokenType::IDENTIFIER, "arg3"},
+        {TokenType::RPAR},
+        // fm3(arg1)
+        {TokenType::IDENTIFIER, "fm3"},
+        {TokenType::LPAR},
+        {TokenType::IDENTIFIER, "arg1"},
+        {TokenType::RPAR},
+        // "name"
+        {TokenType::STRING, "\"name\""},
+        // "\"\\\"str\\\"\""
+        {TokenType::STRING, "\"\\\"\\\\\\\"str\\\\\\\"\\\"\""},
+        // "1, 2, 3"
+        {TokenType::STRING, "\"1, 2, 3\""},
+        // name1name2
+        {TokenType::IDENTIFIER, "name1name2"},
+        // 12
+        {TokenType::I_CONSTANT, "12"},
+        // +=
+        {TokenType::ADD_ASGN},
+        // 2
+        {TokenType::I_CONSTANT, "2"},
+        // 12, 3
+        {TokenType::I_CONSTANT, "12"},
+        {TokenType::COMMA},
+        {TokenType::I_CONSTANT, "3"},
+        // name_@
+        {TokenType::IDENTIFIER, "name_"},
+        {TokenType::INVALID, "@"},
+        // +-
+        {TokenType::PLUS},
+        {TokenType::MINUS},
+        // foo a foo 1 b foo 1 2 c
+        {TokenType::IDENTIFIER, "foo"},
+        {TokenType::IDENTIFIER, "a"},
+        {TokenType::IDENTIFIER, "foo"},
+        {TokenType::I_CONSTANT, "1"},
+        {TokenType::IDENTIFIER, "b"},
+        {TokenType::IDENTIFIER, "foo"},
+        {TokenType::I_CONSTANT, "1"},
+        {TokenType::I_CONSTANT, "2"},
+        {TokenType::IDENTIFIER, "c"},
+    };
+    EXPECT_TRUE(ExpectTokenSequence(*tsp_, preprocessed));
+    // Check the output of std::cerr
+    std::vector<std::string> err_vec{
+        "embedding directives within macro arguments is not supported",
+        "macros.c:29:1: #define not_supported1",
+        "embedding directives within macro arguments is not supported",
+        "macros.c:30:1: #define not_supported2",
+        "too many arguments provided to function-like macroinvocation",
+        "macros.c:33:15: fm3(arg1, arg2, arg3)",
+        "too few arguments provided to function-like macro invocation",
+        "macros.c:35:1: fm3(arg1)",
+        "pasting formed '+-', an invalid preprocessing token",
+        "macros.c:54:1: dsharp_macro1(+, -)",
+        "unterminated function-like macro invocation",
+        "macros.c:64:1: fm3(p1,"
+    };
+    ExpectErrorList(output_buf, err_vec);
+    // Set the original buffer to std::cerr
+    std::cerr.rdbuf(orig_buf);
+}
+
 }
