@@ -7,13 +7,13 @@ TEST(LocStrTest, LocationString) {
     const std::string fname{"testname"};
     const std::string fcontent{
         "testcontent line1\ntestcontent line2\n\t testcontent line3"};
-    SourceLocation loc1{&fname, 1, 1, fcontent.cbegin(), 17};
+    SourceLoc loc1{&fname, 1, 1, fcontent.cbegin(), 17};
     EXPECT_EQ(LocStr(loc1),
             "testname:1:1: testcontent line1\n              ^");
-    SourceLocation loc2{&fname, 2, 13, std::next(fcontent.cbegin(), 18), 17};
+    SourceLoc loc2{&fname, 2, 13, std::next(fcontent.cbegin(), 18), 17};
     EXPECT_EQ(LocStr(loc2),
             "testname:2:13: testcontent line2\n                           ^");
-    SourceLocation loc3{&fname, 3, 15, std::next(fcontent.cbegin(), 36), 19};
+    SourceLoc loc3{&fname, 3, 15, std::next(fcontent.cbegin(), 36), 19};
     EXPECT_EQ(LocStr(loc3),
             "testname:3:15: testcontent line3\n                           ^");
 }
@@ -23,9 +23,9 @@ protected:
     TokenSequenceTest() : fname_{"testname"},
                           fcontent_{"ident1 ident2 ident3"} {
         ts_.EmplaceBack(TokenType::IDENTIFIER, "ident1",
-                        std::make_shared<SourceLocation>(
-                                 SourceLocation{&fname_, 1, 1,
-                                                fcontent_.cbegin(), 20}));
+                        std::make_shared<SourceLoc>(
+                                 SourceLoc{&fname_, 1, 1,
+                                           fcontent_.cbegin(), 20}));
         ts_.EmplaceBack(TokenType::IDENTIFIER, "ident2");
         ts_.EmplaceBack(TokenType::IDENTIFIER, "ident3");
     }
@@ -109,7 +109,7 @@ TEST_F(TokenSequenceTest, MoveConstruct) {
 }
 
 TEST_F(TokenSequenceTest, Replace) {
-    SourceLocation loc{&fname_, 2, 2, fcontent_.cbegin(), 20};
+    SourceLoc loc{&fname_, 2, 2, fcontent_.cbegin(), 20};
     TokenSequence ts_copy{ts_};
     std::list<Token> tv{{TokenType::IDENTIFIER, "ident4"},
                           {TokenType::IDENTIFIER, "ident5"}};
