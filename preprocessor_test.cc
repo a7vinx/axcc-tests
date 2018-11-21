@@ -126,7 +126,7 @@ TEST_F(PreprocessorTest, HandlePPDirectives) {
         {TokenType::IDENTIFIER, "f2"},
         {TokenType::LPAR, "("},
         {TokenType::RPAR, ")"},
-        {TokenType::SEMI, ";"}
+        {TokenType::SCLN, ";"}
     };
     EXPECT_TRUE(ExpectTokenSequence(*tsp_, preprocessed));
     // Check the status of macros in preprocessor.

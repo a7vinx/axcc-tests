@@ -249,7 +249,7 @@ TEST_F(ScannerTest, ScanPunctuator) {
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::QUES);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::TILDE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::COMMA);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SEMI);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SCLN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::ELLIP);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::DOT);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::LSBRACKET);
@@ -304,20 +304,20 @@ TEST_F(ScannerTest, ScanPunctuator) {
 TEST_F(ScannerTest, SkipComment) {
     InitScanner("comments.c");
     std::unique_ptr<TokenSequence> tsp = scp_->Scan();
-    EXPECT_EQ(tsp->Begin()->Tag(), TokenType::SEMI);
+    EXPECT_EQ(tsp->Begin()->Tag(), TokenType::SCLN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SEMI);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SCLN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SEMI);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SCLN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::PLUS);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::PLUS);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::SLASH);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SEMI);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SCLN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::END);
 }
 
@@ -606,7 +606,7 @@ TEST_F(ScannerTest, ScanAll) {
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::LBRACE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::RETURN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::IDENTIFIER);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SEMI);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SCLN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::RBRACE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::SHARP);
@@ -635,7 +635,7 @@ TEST_F(ScannerTest, ScanAll) {
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::LBRACE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::RETURN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::IDENTIFIER);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SEMI);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SCLN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::RBRACE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
@@ -655,7 +655,7 @@ TEST_F(ScannerTest, ScanAll) {
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::COMMA);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::IDENTIFIER);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::RPAR);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SEMI);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SCLN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::DO);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::LBRACE);
@@ -664,13 +664,13 @@ TEST_F(ScannerTest, ScanAll) {
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::LPAR);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::I_CONSTANT);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::RPAR);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SEMI);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SCLN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::INT);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::IDENTIFIER);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::ASGN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::I_CONSTANT);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SEMI);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SCLN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::RETURN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::IDENTIFIER);
@@ -680,7 +680,7 @@ TEST_F(ScannerTest, ScanAll) {
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::PLUS);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::IDENTIFIER);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::RPAR);
-    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SEMI);
+    EXPECT_EQ(tsp->Next()->Tag(), TokenType::SCLN);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::RBRACE);
     EXPECT_EQ(tsp->Next()->Tag(), TokenType::NEWLINE);
