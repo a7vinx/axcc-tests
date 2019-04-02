@@ -1,0 +1,30 @@
+Error: non-extern declaration of 'g1' follows extern declaration
+obj_decls.c:16:12: static int g1;
+                              ^
+Error: conflicting types for 'g1'
+obj_decls.c:19:7: _Bool g1;
+                        ^
+Error: illegal storage class on file-scoped variable
+obj_decls.c:22:1: register int g5;
+                  ^
+Error: 'inline' or '_Noreturn' can only appear on functions
+obj_decls.c:25:22: inline _Noreturn int g6;
+                                        ^
+Error: non-extern declaration of 'g1' follows extern declaration
+obj_decls.c:52:9: int g1;
+                      ^
+Error: conflicting types for 'l14'
+obj_decls.c:53:17: static long l14;
+                               ^
+Error: redefinition of 'l1'
+obj_decls.c:56:9: int l1;
+                      ^
+Error: conflicting types for 'l2'
+obj_decls.c:57:11: _Bool l2;
+                         ^
+Error: variable has incomplete type
+obj_decls.c:60:10: void x;
+                        ^
+Warning: tentative array definition assumed to have one element
+obj_decls.c:9:5: int g4[];
+                     ^

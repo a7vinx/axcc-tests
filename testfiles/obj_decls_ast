@@ -1,0 +1,33 @@
+FuncDef 'void ()' localvars
+  CmpdStmt
+    ObjDefStmt 'int' l1
+    ObjDefStmt 'double' l2
+    ObjDefStmt 'long long' l3
+    ObjDefStmt 'unsigned short' l4
+    ObjDefStmt 'char' l5
+    ObjDefStmt 'bool' l6
+    ObjDefStmt 'long (*)' l7
+    ObjDefStmt 'long (* (* (*)))' l8
+    ObjDefStmt 'int const' l9
+    ObjDefStmt 'short const (* const)' l10
+    ObjDefStmt 'char restrict (*)' l11
+    ObjDefStmt 'char (* restrict)' l12
+    ObjDefStmt 'int volatile' l13
+    ObjDefStmt 'int' l15
+    ObjDefStmt 'int' l16
+    ObjDefStmt 'int' l17
+    ObjDefStmt 'int' g1
+    ObjDefStmt 'long' l14
+    ObjDefStmt 'int' l1
+    ObjDefStmt 'bool' l2
+    ObjDefStmt 'void' x
+    ExprStmt
+      BinaryExpr 'int' '='
+        Identifier 'void' x
+        Constant 'int' 2
+ObjDefStmt 'int' g1
+ObjDefStmt 'int' g2
+ObjDefStmt 'int' g3
+ObjDefStmt 'int [1]' g4
+ObjDefStmt 'int' g5
+ObjDefStmt 'int' g6
