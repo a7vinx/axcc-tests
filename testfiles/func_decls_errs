@@ -1,0 +1,36 @@
+Error: non-extern declaration of 'f1' follows extern declaration
+func_decls.c:17:12: static int f1();
+                               ^
+Error: conflicting types for 'f1'
+func_decls.c:20:6: void f1();
+                        ^
+Error: conflicting types for 'f1'
+func_decls.c:21:5: int f1(int a, int b);
+                       ^
+Error: argument may not have 'void' type
+func_decls.c:24:13: int f5(void t);
+                                ^
+Error: argument may not have 'void' type
+func_decls.c:27:17: int f6(int, void);
+                                    ^
+Error: function declared in block scope cannot have 'static' storage class
+func_decls.c:38:16: static int nested_func2();
+                               ^
+Error: variable has incomplete type
+func_decls.c:44:17: int f4(struct S s) {
+                                    ^
+Error: conflicting types for 'f4'
+func_decls.c:44:5: int f4(struct S s) {
+                       ^
+Error: parameter named 'a' is missing
+func_decls.c:56:5: int a;
+                       ^
+Warning: type of 'a' defaults to 'int'
+func_decls.c:60:19: void kr_func_def3(a, b)
+                                      ^
+Warning: type of 'b' defaults to 'int'
+func_decls.c:60:22: void kr_func_def3(a, b)
+                                         ^
+Error: redefinition of 'f1'
+func_decls.c:65:5: int f1() {
+                       ^

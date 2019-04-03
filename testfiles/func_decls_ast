@@ -1,0 +1,18 @@
+FuncDef 'int ()' f1
+  CmpdStmt
+FuncDef 'void (int, int)' f2
+  CmpdStmt
+    ExprStmt
+      BinaryExpr 'int' '='
+        Identifier 'int' a
+        Constant 'int' 3
+FuncDef 'int (struct S)' f4
+  CmpdStmt
+FuncDef 'void (int, int, char)' kr_func_def1
+  CmpdStmt
+FuncDef 'void ()' kr_func_def2
+  CmpdStmt
+FuncDef 'void (int, int)' kr_func_def3
+  CmpdStmt
+FuncDef 'int ()' f1
+  CmpdStmt
