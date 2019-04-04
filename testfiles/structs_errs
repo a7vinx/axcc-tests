@@ -1,0 +1,27 @@
+Error: type name does not allow storage class to be specified
+structs.c:12:5: static int m4;
+                ^
+Error: field declared as a function
+structs.c:15:9: int m5();
+                    ^
+Error: bit-field has non-integral type
+structs.c:21:11: void* b2 : 2;
+                       ^
+Error: width of bit-field (2 bits) exceeds width of its type (1 bit)
+structs.c:22:11: _Bool b3 : 2;
+                       ^
+Error: width of bit-field (300 bits) exceeds width of its type (64 bit)
+structs.c:23:10: long b4 : 300;
+                      ^
+Error: flexible array member 'm1' not allowed in otherwise empty struct
+structs.c:50:9: int m1[];
+                    ^
+Error: field has incomplete type
+structs.c:53:9: int m1[];
+                    ^
+Error: redefinition of 'S1'
+structs.c:60:8: struct S1 {
+                       ^
+Error: left operand should be a modifiable lvalue
+structs.c:79:13: s1_3.m3 = 2;
+                         ^

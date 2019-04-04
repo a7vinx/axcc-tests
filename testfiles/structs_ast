@@ -1,0 +1,36 @@
+FuncDef 'void ()' structs
+  CmpdStmt
+    ObjDefStmt 'struct S1' s1_2
+    ObjDefStmt 'struct S1' s1_3
+    ObjDefStmt 'struct S1' s1_4
+    ExprStmt
+      BinaryExpr 'char' '='
+        BinaryExpr 'char' '.'
+          Identifier 'struct S1' s1_3
+          Identifier 'char' c1
+        UnaryExpr 'char' cast
+          Constant 'int' 97
+    ExprStmt
+      BinaryExpr 'char' '='
+        BinaryExpr 'char' '.'
+          BinaryExpr 'struct S1Inner' '.'
+            Identifier 'struct S1' s1_3
+            Identifier 'struct S1Inner' s1i_1
+          Identifier 'char' si_c1
+        UnaryExpr 'char' cast
+          Constant 'int' 98
+    ExprStmt
+      BinaryExpr 'int' '='
+        BinaryExpr 'int const' '.'
+          Identifier 'struct S1' s1_3
+          Identifier 'int const' m3
+        Constant 'int' 2
+    ExprStmt
+      BinaryExpr 'long' '='
+        BinaryExpr 'long' '.'
+          Identifier 'struct S1' s1_3
+          Identifier 'long' b4
+        UnaryExpr 'long' cast
+          Constant 'int' 1
+ObjDefStmt 'struct S1' s1_1
+ObjDefStmt 'struct S1Inner' s1i_2
