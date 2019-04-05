@@ -1,0 +1,12 @@
+Error: no forward-declarations for enums in C
+enums.c:3:6: enum E1;
+                  ^
+Warning: empty declaration does not declare anything
+enums.c:3:8: enum E1;
+                    ^
+Error: redefinition of enumerator 'E1_Item1'
+enums.c:13:5: E1_Item1
+              ^
+Warning: empty declaration does not declare anything
+enums.c:14:2: };
+               ^

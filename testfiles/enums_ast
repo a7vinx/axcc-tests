@@ -1,0 +1,7 @@
+ObjDefStmt 'int' i1
+  Initializer offset: 0
+    Constant 'int' 0
+ObjDefStmt 'int' i2
+  Initializer offset: 0
+    Constant 'int' 8
+ObjDefStmt 'int' e1_1
