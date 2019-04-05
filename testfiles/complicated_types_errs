@@ -1,0 +1,9 @@
+Error: function cannot return array type
+complicated_types.c:25:7: int m1()[10];
+                                ^
+Error: function cannot return function type
+complicated_types.c:27:10: int (*m2)()();
+                                    ^
+Error: array of functions
+complicated_types.c:29:11: int *(*m3)[10]();
+                                     ^

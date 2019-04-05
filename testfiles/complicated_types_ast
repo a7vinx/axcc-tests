@@ -1,0 +1,10 @@
+ObjDefStmt 'int (* [10])' a1
+ObjDefStmt 'int (* [10])()' a2
+ObjDefStmt 'int (*)()()' m2
+ObjDefStmt 'int (* (*)[10]())' m3
+ObjDefStmt 'int (*)()' p1
+ObjDefStmt 'int (*)[10]' p2
+ObjDefStmt 'int (* (*)())()' p3
+ObjDefStmt 'int (* (*)[10])()' p4
+ObjDefStmt 'int (* const (* const)[10])()' p5
+ObjDefStmt 'int const (* volatile)' t1
