@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.1)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_BUILD_TYPE Debug)
 
 enable_testing()
 
@@ -40,12 +41,12 @@ add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src
 include_directories(axcc/src)
 
 # Build tests
-add_executable(token_test token_test.cc axcc/src/token.cc)
+add_executable(token_test token_test.cc axcc/src/token.cc axcc/src/error.cc)
 target_link_libraries(token_test gtest_main)
 add_test(NAME run_token_test COMMAND token_test)
 
 add_executable(scanner_test scanner_test.cc axcc/src/token.cc
-               axcc/src/scanner.cc)
+               axcc/src/scanner.cc axcc/src/error.cc)
 target_link_libraries(scanner_test gtest_main)
 add_test(NAME run_scanner_test COMMAND scanner_test
          WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/testfiles)
@@ -53,7 +54,14 @@ add_test(NAME run_scanner_test COMMAND scanner_test
 # Do not include preprocessor.cc because it has already been included by
 # preprocessor_test.cc
 add_executable(preprocessor_test preprocessor_test.cc axcc/src/token.cc
-               axcc/src/scanner.cc)
+               axcc/src/scanner.cc axcc/src/error.cc)
 target_link_libraries(preprocessor_test gtest_main)
 add_test(NAME run_preprocessor_test COMMAND preprocessor_test
+         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/testfiles)
+
+add_executable(parser_test parser_test.cc axcc/src/token.cc axcc/src/scanner.cc
+               axcc/src/preprocessor.cc axcc/src/parser.cc axcc/src/type.cc
+               axcc/src/ast.cc axcc/src/evaluator.cc axcc/src/error.cc)
+target_link_libraries(parser_test gtest_main)
+add_test(NAME run_parser_test COMMAND parser_test
          WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/testfiles)
