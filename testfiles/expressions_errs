@@ -1,0 +1,9 @@
+Error: left operand should be a modifiable lvalue
+expressions.c:17:18: ++i1 ? 1 : 2 = 3;
+                                  ^
+Error: controlling expression type not compatible with any generic association type
+expressions.c:26:14: _Generic(i1, long: 2);
+                              ^
+Error: use of undeclared identifier 'undecl_ident'
+expressions.c:31:5: undecl_ident;
+                    ^

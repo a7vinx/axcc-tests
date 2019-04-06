@@ -1,0 +1,71 @@
+FuncDef 'void (int, int)' f
+  CmpdStmt
+FuncDef 'void ()' expressions
+  CmpdStmt
+    ObjDefStmt 'int' i1
+      Initializer offset: 0
+        Constant 'int' 0
+    ObjDefStmt 'int' i2
+      Initializer offset: 0
+        BinaryExpr 'int' '>>'
+          BinaryExpr 'int' '*'
+            Constant 'int' 4
+            BinaryExpr 'int' '+'
+              Constant 'int' 2
+              Constant 'int' 3
+          Constant 'int' 1
+    ObjDefStmt 'bool' b1
+      Initializer offset: 0
+        UnaryExpr 'bool' cast
+          BinaryExpr 'int' '||'
+            BinaryExpr 'int' '&&'
+              BinaryExpr 'int' '>'
+                Identifier 'int' i1
+                Constant 'int' 2
+              Constant 'int' 1
+            Constant 'int' 2
+    ObjDefStmt 'int [10]' a1
+    ExprStmt
+      BinaryExpr 'int' '='
+        ConditionalExpr 'int'
+          UnaryExpr 'int' prefix '++'
+            Identifier 'int' i1
+          Constant 'int' 1
+          Constant 'int' 2
+        Constant 'int' 3
+    ExprStmt
+      FuncCall 'void'
+        Identifier 'void (int, int)' f
+        UnaryExpr 'int' cast
+          UnaryExpr 'long' cast
+            BinaryExpr 'int' '+'
+              Identifier 'int' i1
+              Identifier 'int' i2
+        UnaryExpr 'int' cast
+          UnaryExpr 'char' cast
+            UnaryExpr 'int' '*'
+              BinaryExpr 'int (*)' '+'
+                Identifier 'int [10]' a1
+                Identifier 'int' i1
+    ExprStmt
+      TempObj 'struct S' .T2
+        Initializer offset: 0
+          Constant 'int' 1
+        Initializer offset: 4
+          Constant 'int' 2
+    ExprStmt
+      TempObj 'int [3]' .T3
+        Initializer offset: 0
+          Constant 'int' 1
+        Initializer offset: 4
+          Constant 'int' 2
+        Initializer offset: 8
+          Constant 'int' 3
+    ExprStmt
+      Constant 'int' 3
+    ExprStmt
+      Identifier 'int' i1
+    ExprStmt
+      Constant 'int' 3
+    ExprStmt
+      Identifier 'int' undecl_ident
