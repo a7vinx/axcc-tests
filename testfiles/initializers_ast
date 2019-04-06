@@ -1,0 +1,104 @@
+ObjDefStmt 'int' i1
+  Initializer offset: 0
+    Constant 'int' 8
+ObjDefStmt 'int' i2
+  Initializer offset: 0
+    Constant 'int' 2
+ObjDefStmt 'int' i3
+  Initializer offset: 0
+    Constant 'int' 3
+ObjDefStmt 'int' i4
+  Initializer offset: 0
+    BinaryExpr 'int' '.'
+      Identifier 'struct S1' s1_1
+      Identifier 'int' m1
+ObjDefStmt 'int (*)' p1
+  Initializer offset: 0
+    AddrConstant offset: 8 label name: i1
+ObjDefStmt 'char (*)' p2
+  Initializer offset: 0
+    AddrConstant offset: 2
+      StrLiteral 'char [5]' \x41\x41\x41\x41\x22
+ObjDefStmt 'int (*)' p3
+  Initializer offset: 0
+    AddrConstant offset: 0 label name: s1_1
+ObjDefStmt 'int (*)' p4
+  Initializer offset: 0
+    UnaryExpr 'int (*)' cast
+      UnaryExpr 'int' cast
+        UnaryExpr 'int (*)' '&'
+          Identifier 'int' i1
+ObjDefStmt 'int [10]' a1
+  Initializer offset: 0
+    Constant 'int' 1
+  Initializer offset: 16
+    Constant 'int' 5
+ObjDefStmt 'int [7]' a2
+  Initializer offset: 0
+    Constant 'int' 1
+  Initializer offset: 24
+    Constant 'int' 7
+ObjDefStmt 'int [10][10]' a3
+  Initializer offset: 0
+    Constant 'int' 1
+  Initializer offset: 8
+    Constant 'int' 1
+ObjDefStmt 'char [10]' a4
+  Initializer offset: 0
+    AddrConstant offset: 0
+      StrLiteral 'char [5]' \x41\x41\x41\x41\x22
+ObjDefStmt 'char [10][10]' a5
+  Initializer offset: 0
+    AddrConstant offset: 0
+      StrLiteral 'char [5]' \x41\x41\x41\x41\x22
+  Initializer offset: 20
+    AddrConstant offset: 0
+      StrLiteral 'char [5]' \x41\x41\x41\x41\x22
+ObjDefStmt 'unsigned int [10]' a6
+  Initializer offset: 0
+    AddrConstant offset: 0
+      StrLiteral 'int [5]' \x41\x41\x41\x41\x22
+ObjDefStmt 'unsigned short [10]' a7
+  Initializer offset: 0
+    AddrConstant offset: 0
+      StrLiteral 'int [5]' \x41\x41\x41\x41\x22
+ObjDefStmt 'struct S2' s2_1
+  Initializer offset: 0
+    Constant 'int' 1
+  Initializer offset: 8
+    Constant 'int' 1
+  Initializer offset: 12
+    Constant 'int' 2
+  Initializer offset: 16
+    Constant 'int' 4
+  Initializer offset: 20
+    Constant 'int' 5
+ObjDefStmt 'struct S2' s2_2
+  Initializer offset: 0
+    Identifier 'struct S2' s2_1
+ObjDefStmt 'struct S2Inner' s2i_1
+  Initializer offset: 0
+    Constant 'int' 1
+  Initializer offset: 4
+    Constant 'int' 2
+ObjDefStmt 'struct S2' s2_3
+  Initializer offset: 8
+    Identifier 'struct S2Inner' s2i_1
+ObjDefStmt 'struct S3' s3_1
+  Initializer offset: 8
+    Constant 'int' 3
+  Initializer offset: 12
+    Constant 'int' 4
+  Initializer offset: 16
+    Constant 'int' 5
+  Initializer offset: 40
+    Constant 'int' 2
+FuncDef 'void ()' initializers
+  CmpdStmt
+    ObjDefStmt 'int' i1
+      Initializer offset: 0
+        Constant 'int' 1
+    ObjDefStmt 'int' i2
+      Initializer offset: 0
+        Identifier 'int' i1
+ObjDefStmt 'struct S1' s1_1

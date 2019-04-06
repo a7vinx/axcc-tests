@@ -1,0 +1,21 @@
+Error: compile-time constant expected
+initializers.c:12:14: int i4 = s1_1.m1;
+                                   ^
+Warning: incompatible integer to pointer conversion
+initializers.c:19:11: int* p4 = (int)&i1;
+                                ^
+Error: compile-time constant expected
+initializers.c:19:16: int* p4 = (int)&i1;
+                                     ^
+Error: '}' expected
+initializers.c:28:24: int a3[10][10] = {1, {1, 2, }, 1};
+                                             ^
+Error: initializing char array with incompatible string literal
+initializers.c:36:25: unsigned short a7[10] = U"AAAA";
+                                              ^
+Error: compile-time constant expected
+initializers.c:51:18: struct S2 s2_2 = s2_1;
+                                       ^
+Error: compile-time constant expected
+initializers.c:53:25: struct S2 s2_3 = {.m3 = s2i_1};
+                                              ^
