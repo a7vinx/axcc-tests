@@ -1,0 +1,21 @@
+Error: expression expected
+statements.c:17:13: if (i1) int m;
+                            ^
+Error: multiple default labels in one switch
+statements.c:50:9: default: ;
+                   ^
+Error: duplicate case value
+statements.c:47:14: case 2: break;
+                         ^
+Error: 'continue' statement not in loop statement
+statements.c:54:5: continue;
+                   ^
+Error: 'break' statement not in loop or switch statement
+statements.c:56:5: break;
+                   ^
+Error: non-void function should return a value
+statements.c:59:11: return;
+                          ^
+Error: use of undeclared label 'undecl_label'
+statements.c:6:10: goto undecl_label;
+                        ^

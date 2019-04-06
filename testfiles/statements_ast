@@ -1,0 +1,140 @@
+FuncDef 'int ()' statements
+  CmpdStmt
+    ObjDefStmt 'int' i1
+      Initializer offset: 0
+        Constant 'int' 1
+    CmpdStmt
+      LabelStmt begin
+      JumpStmt begin
+    JumpStmt undecl_label
+    IfStmt
+      Identifier 'int' i1
+      ExprStmt
+        BinaryExpr 'int' '='
+          Identifier 'int' i1
+          Constant 'int' 2
+    IfStmt
+      Identifier 'int' i1
+      ExprStmt
+        BinaryExpr 'int' '='
+          Identifier 'int' i1
+          Constant 'int' 1
+      CmpdStmt
+        ExprStmt
+          BinaryExpr 'int' '='
+            Identifier 'int' i1
+            Constant 'int' 0
+    IfStmt
+      Identifier 'int' i1
+      NullStmt
+    CmpdStmt
+      LabelStmt .L14
+      IfStmt
+        Identifier 'int' i1
+        CmpdStmt
+          CmpdStmt
+            JumpStmt .L14
+            JumpStmt .L15
+            CmpdStmt
+              LabelStmt .L16
+              CmpdStmt
+                JumpStmt .L17
+                JumpStmt .L18
+              LabelStmt .L17
+              IfStmt
+                Constant 'int' 1
+                JumpStmt .L16
+              LabelStmt .L18
+          JumpStmt .L14
+      LabelStmt .L15
+    CmpdStmt
+      NullStmt
+      LabelStmt .L19
+      IfStmt
+        Constant 'int' 1
+        CmpdStmt
+          CmpdStmt
+            JumpStmt .L20
+            JumpStmt .L21
+          LabelStmt .L20
+          NullStmt
+          JumpStmt .L19
+      LabelStmt .L21
+    CmpdStmt
+      ExprStmt
+        TempObj 'int' .T1
+          Initializer offset: 0
+            Identifier 'int' i1
+      IfStmt
+        BinaryExpr 'int' '=='
+          TempObj 'int' .T1
+            Initializer offset: 0
+              Identifier 'int' i1
+          Constant 'int' 1
+        JumpStmt .L23
+      IfStmt
+        BinaryExpr 'int' '=='
+          TempObj 'int' .T1
+            Initializer offset: 0
+              Identifier 'int' i1
+          Constant 'int' 2
+        JumpStmt .L26
+      IfStmt
+        BinaryExpr 'int' '=='
+          TempObj 'int' .T1
+            Initializer offset: 0
+              Identifier 'int' i1
+          Constant 'int' 2
+        JumpStmt .L27
+      JumpStmt .L28
+      CmpdStmt
+        CmpdStmt
+          LabelStmt .L23
+          CmpdStmt
+            CmpdStmt
+              ExprStmt
+                TempObj 'int' .T0
+                  Initializer offset: 0
+                    Identifier 'int' i1
+              IfStmt
+                BinaryExpr 'int' '=='
+                  TempObj 'int' .T0
+                    Initializer offset: 0
+                      Identifier 'int' i1
+                  Constant 'int' 1
+                JumpStmt .L25
+              JumpStmt .L24
+              CmpdStmt
+                ObjDefStmt 'int' i2
+                  Initializer offset: 0
+                    Constant 'int' 0
+                CmpdStmt
+                  LabelStmt .L25
+                  JumpStmt .L24
+              LabelStmt .L24
+        CmpdStmt
+          LabelStmt .L26
+          ExprStmt
+            BinaryExpr 'int' '='
+              Identifier 'int' i1
+              Constant 'int' 3
+        JumpStmt .L22
+        CmpdStmt
+          LabelStmt .L27
+          JumpStmt .L22
+        CmpdStmt
+          LabelStmt .L28
+          NullStmt
+        CmpdStmt
+          LabelStmt .L29
+          NullStmt
+      LabelStmt .L22
+    NullStmt
+    NullStmt
+    ReturnStmt
+      Identifier 'int' i1
+    ReturnStmt
+    ObjDefStmt 'long' i3
+    ReturnStmt
+      UnaryExpr 'int' cast
+        Identifier 'long' i3
